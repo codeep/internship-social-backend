@@ -14,7 +14,17 @@ export class UserService {
     // return this.userModel.create(body);
   }
 
-  async getUsers() {
-    // return this.userModel.create(body);
+  async getNearbyUsers(userId) {
+    this.userModel
+      .findById(userId)
+      .then((user) => {
+        return this.userModel
+          .findAll()
+          .limit(3);
+      });
+  }
+
+  async searchUsers() {
+    return this.userModel.find({ /*  */ });
   }
 }

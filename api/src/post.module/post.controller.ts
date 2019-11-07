@@ -10,7 +10,7 @@ export class PostController {
   constructor(
     private readonly postService: PostService) {}
 
-  @Post()
+  @Post('/')
   async create(@Body() body: PostDto) {
     this.postService.create(body);
   }
