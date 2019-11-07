@@ -2,7 +2,9 @@ import { Controller, Post, Body, Param, Delete, Get } from '@nestjs/common';
 import { PostService } from './post.service';
 import { ObjectId } from 'mongoose';
 import { PostDto } from './post.dto';
+import { ApiUseTags } from '@nestjs/swagger';
 
+@ApiUseTags('posts')
 @Controller('posts')
 export class PostController {
   constructor(

@@ -1,9 +1,10 @@
-import { Controller, Get, Post, Body, Query, Res, HttpStatus } from '@nestjs/common';
+import { Controller, Get, Post, Body, Query, Res } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { LoginDto, RegisterDto } from './auth.dto';
-import { ApiImplicitQuery } from '@nestjs/swagger';
+import { ApiImplicitQuery, ApiUseTags } from '@nestjs/swagger';
 import { Response } from 'express';
 
+@ApiUseTags('auth')
 @Controller('auth')
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
