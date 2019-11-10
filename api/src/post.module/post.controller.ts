@@ -1,8 +1,9 @@
-import { Controller, Post, Body, Param, Delete, Get } from '@nestjs/common';
+import { Controller, Post, Body, Param, Delete, Get, Query, Res } from '@nestjs/common';
 import { PostService } from './post.service';
 import { ObjectId } from 'mongoose';
 import { PostDto } from './post.dto';
 import { ApiUseTags } from '@nestjs/swagger';
+import { Response } from 'express';
 
 @ApiUseTags('posts')
 @Controller('posts')
@@ -16,13 +17,26 @@ export class PostController {
   }
 
   @Get('feed')
-  async feed(@Body() body: PostDto) {
-    this.postService.create(body);
+  async feed(@Query() queryParams, @Res() res: Response) {
+    const userId = 1;
+    const posts = await this.postService.getFeed(userId, queryParams.offset, queryParams.limit);
+
+    return res.json({
+      status: 200,
+      message: '',
+      data: posts
+    });
   }
 
-  @Get('wall')
-  async wall(@Body() body: PostDto) {
-    this.postService.create(body);
+  @Get('wall/:id')
+  async wall(@Param() id, @Query() offset, @Query() limit, @Res() res: Response) {
+    const posts = await this.postService.getWall(id, offset, limit);
+
+    return res.json({
+      status: 200,
+      message: '',
+      data: posts
+    })
   }
 
   @Delete(':id')

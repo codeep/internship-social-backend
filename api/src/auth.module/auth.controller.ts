@@ -2,6 +2,7 @@ import { Controller, Get, Post, Body, Query, Res } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { LoginDto, RegisterDto } from './auth.dto';
 import { ApiImplicitQuery, ApiUseTags } from '@nestjs/swagger';
+import { jsonwebtoken } from 'jsonwebtoken';
 import { Response } from 'express';
 
 @ApiUseTags('auth')
@@ -12,7 +13,18 @@ export class AuthController {
   @Post('login')
   async login(@Body() requestBody: LoginDto, @Res() res: Response) {
     try {
-      await this.authService.login(requestBody.email, requestBody.password);
+      const user = await this.authService.login(requestBody.email, requestBody.password);
+      const jwt = jsonwebtoken.sign({
+        userId: user.id
+      }, 'secret key goes here', { expiresIn: 600 });
+
+      return res.json({
+        status: 200,
+        message: '',
+        data: {
+          token: jwt
+        }
+      });
     } catch (e) {
       return res.json({
         status: 404,

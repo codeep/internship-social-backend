@@ -10,21 +10,26 @@ export class UserService {
   ) {
   }
 
+  async getNearbyUsers() {
+    return this.userModel.aggregate([
+      { $sample: { size: 3 } }
+    ]);
+  }
+
+  async searchUsers(search) {
+    return this.userModel
+      .find({ $or: [
+        { firstname: new RegExp(search, 'g') }, 
+        { lastname: new RegExp(search, 'g') }
+      ]})
+      .limit(10);
+  }
+
   async getUser(id) {
-    // return this.userModel.create(body);
+    return this.userModel.findById(id);
   }
 
-  async getNearbyUsers(userId) {
-    this.userModel
-      .findById(userId)
-      .then((user) => {
-        return this.userModel
-          .findAll()
-          .limit(3);
-      });
-  }
-
-  async searchUsers() {
-    return this.userModel.find({ /*  */ });
+  async saveUser(id, body) {
+    return;
   }
 }
