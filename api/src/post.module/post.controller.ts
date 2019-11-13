@@ -33,8 +33,8 @@ export class PostController {
 
   @ApiImplicitHeader({ name: 'token'})
   @Get('feed')
-  async feed(@Query() queryParams, @Res() res: Response) {
-    const userId = 1;
+  async feed(@Query() queryParams, @Req() req, @Res() res: Response) {
+    const userId = req.user.userId;
     const posts = await this.postService.getFeed(userId, queryParams.offset, queryParams.limit);
 
     return res.json({
@@ -79,7 +79,20 @@ export class PostController {
 
   @ApiImplicitHeader({ name: 'token'})
   @Post(':id/like')
-  async like(@Param() id: ObjectId) {
-    this.postService.like(id);
+  async like(@Req() req, @Res() res, @Param() id: string) {
+    const result = await this.postService.like(req.user.userId, id);
+    if (result) {
+      res.json({
+        status: 200,
+        message: '',
+        data: { postId: id }
+      });
+    } else {
+      res.json({
+        status: 400,
+        message: 'Invalid request',
+        data: null
+      });
+    }
   }
 }

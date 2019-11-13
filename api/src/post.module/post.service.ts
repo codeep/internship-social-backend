@@ -22,8 +22,16 @@ export class PostService {
     return this.postModel.delete({ author: userId, id })
   }
 
-  async like(postId) {
-    return this.postModel.findById(postId);
+  async like(userId, postId) {
+    const post = await this.postModel.findById(postId);
+    let operator;
+    if (post.likes.includes(userId)) {
+      operator = '$pull';
+    } else {
+      operator = '$push';
+    }
+
+    return this.postModel.findAndUpdateById(postId,  { $set: { [operator]: userId } });
   }
 
   async getFeed(userId, offset, limit) {
