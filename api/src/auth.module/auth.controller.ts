@@ -17,7 +17,7 @@ export class AuthController {
     if (user) {
       const jwt = jsonwebtoken.sign({
         userId: user.id
-      }, 'secret key goes here', { expiresIn: 600 });
+      }, '3m2b0pu3jdg2c48j6e78', { expiresIn: 600 });
 
       return res.json({
         status: 200,
@@ -30,7 +30,7 @@ export class AuthController {
       return res.json({
         status: 404,
         message: 'User is not found',
-        data: {}
+        data: null
       });
     }
   }
@@ -50,7 +50,7 @@ export class AuthController {
       return res.json({
         status: 409,
         message: 'User already exists',
-        data: {}
+        data: null
       });  
     }
   }
@@ -68,7 +68,7 @@ export class AuthController {
       return res.json({
         status: 500,
         message: 'Internal server error',
-        data: {}
+        data: null
       });
     }
   }
@@ -85,13 +85,13 @@ export class AuthController {
         return res.json({
           status: 200,
           message: '',
-          data: {}
+          data: null
         });
     } catch (e) {
       return res.json({
         status: 400,
         message: 'Token is not valid',
-        data: {}
+        data: null
       });
     }
   }

@@ -40,7 +40,7 @@ export class UserController {
   }
 
   @Get(':id')
-  async getUser(@Param('id') id: ObjectId, @Res() res: Response) {
+  async getUser(@Param('id') id: string, @Res() res: Response) {
     const user = await this.userService.getUser(id);
     delete user.password;
 
@@ -52,7 +52,20 @@ export class UserController {
   }
 
   @Put(':id')
-  async updateUser(@Param('id') id: ObjectId, @Body() body) {
+  async updateUser(@Param('id') id: string, @Body() body) {
     await this.userService.saveUser(id, body);
+  }
+
+  @Post('details')
+  async saveDetails(@Body() body, @Res() res: Response) {
+    // TODO get real id
+    const id = '5dcaf4528e31d74270772a0c';
+    const updateObject = {
+      occupation: body.occupation,
+      location: body.location,
+      bio: body.bio
+    };
+
+    const result = await this.userService.updateUser(id, updateObject);
   }
 }

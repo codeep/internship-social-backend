@@ -12,12 +12,14 @@ export class PostService {
   ) {
   }
 
-  async create(body) {
+  async create(userId, body) {
+    const post = new this.postModel(body);
+    post.author = userId;
     return this.postModel.create(body);
   }
 
-  async delete(id) {
-    return this.postModel.findByIdAndRemove(id);
+  async delete(userId, id) {
+    return this.postModel.delete({ author: userId, id })
   }
 
   async like(postId) {

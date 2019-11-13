@@ -32,4 +32,8 @@ export class UserService {
   async saveUser(id, body) {
     return;
   }
+
+  async updateUser(id, body) {
+    return this.userModel.updateById(id, { $set: body });
+  }
 }
