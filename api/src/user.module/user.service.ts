@@ -12,7 +12,15 @@ export class UserService {
 
   async getNearbyUsers() {
     return this.userModel.aggregate([
-      { $sample: { size: 3 } }
+      { 
+        $sample: { size: 3 } 
+      },
+      { 
+        $project: {
+          password: 0,
+          email: 0
+        }
+      }
     ]);
   }
 

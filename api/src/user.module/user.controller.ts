@@ -18,8 +18,8 @@ export class UserController {
     const users = await this.userService.getNearbyUsers();
 
     return res.json({
-      status: 404,
-      message: 'User is not found',
+      status: 200,
+      message: '',
       data: users
     });
   }
@@ -27,7 +27,7 @@ export class UserController {
   @ApiImplicitHeader({ name: 'token'})
   @ApiImplicitQuery({
     name: 'search',
-    required: true,
+    required: false,
     type: String
   })
   @Get()
