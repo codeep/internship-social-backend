@@ -12,12 +12,12 @@ export class AuthService {
   }
 
   async login(email, password): Promise<any> {
-    return this.userModel.findOne({ email, password: this.hashPassword(password) });
+    return this.userModel.findOne({ email, password: this.hashPassword(password) }, '-password');
   }
 
   async register(registerData): Promise<any> {
     return this.userModel
-      .findOne({ email: registerData.email })
+      .findOne({ email: registerData.email }, '-password')
       .then(user => {
         if (user) {
           return Promise.reject();

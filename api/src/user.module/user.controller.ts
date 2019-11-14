@@ -1,4 +1,4 @@
-import { Controller, Body, Get, Post, Res, Param, Query, Put } from '@nestjs/common';
+import { Controller, Body, Get, Post, Res, Param, Query, Put, Req } from '@nestjs/common';
 import { UserService } from './user.service';
 // import { UserDto } from './user.dto';
 import { ApiImplicitQuery, ApiUseTags, ApiImplicitHeader } from '@nestjs/swagger';
@@ -62,15 +62,15 @@ export class UserController {
 
   @ApiImplicitHeader({ name: 'token'})
   @Post('details')
-  async saveDetails(@Body() body, @Res() res: Response) {
-    // TODO get real id
-    const id = '5dcaf4528e31d74270772a0c';
+  async saveDetails(@Req() req, @Body() body, @Res() res: Response) {
+    const userId = req['user'].userId;
     const updateObject = {
       occupation: body.occupation,
       location: body.location,
       bio: body.bio
     };
 
-    const result = await this.userService.updateUser(id, updateObject);
+    const result = await this.userService.updateUser(userId, updateObject);
+    console.log('result', result);
   }
 }

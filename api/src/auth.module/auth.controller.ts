@@ -23,6 +23,7 @@ export class AuthController {
         status: 200,
         message: '',
         data: {
+          user,
           token: jwt
         }
       });
