@@ -1,0 +1,1 @@
+{"version":3,"file":"posts.schema.js","sourceRoot":"","sources":["../../src/models/posts.schema.ts"],"names":[],"mappings":";;AAAA,qCAAqC;AAExB,QAAA,UAAU,GAAG,IAAI,QAAQ,CAAC,MAAM,CAAC;IAC5C,KAAK,EAAE,MAAM;IACb,OAAO,EAAE,MAAM;IACf,WAAW,EAAE,CAAC;YACZ,KAAK,EAAE,MAAM;YACb,GAAG,EAAE,MAAM;SACZ,CAAC;CACH,EAAE,EAAE,UAAU,EAAE,SAAS,EAAE,CAAC,CAAC"}
