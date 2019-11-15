@@ -12,9 +12,7 @@ export class AuthController {
 
   @Post('login')
   async login(@Body() requestBody: LoginDto, @Res() res: Response) {
-    console.log('= = = = = = = = = =');
-    console.log('user', user);
-    console.log('= = = = = = = = = =');
+    console.log('= = = = + = + = + = + = + = + =');
     const user = await this.authService.login(requestBody.email, requestBody.password);
     console.log('= = = = = = = = = =');
     console.log('user', user);
