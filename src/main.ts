@@ -11,7 +11,7 @@ async function bootstrap() {
     .addTag('auth')
     .addTag('users')
     .addTag('posts')
-    .setSchemes('https')
+    .setSchemes('https', 'http')
     .build();
   const document = SwaggerModule.createDocument(app, options);
   SwaggerModule.setup('api', app, document);

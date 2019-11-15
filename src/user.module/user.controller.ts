@@ -2,7 +2,6 @@ import { Controller, Body, Get, Post, Res, Param, Query, Put, Req } from '@nestj
 import { UserService } from './user.service';
 // import { UserDto } from './user.dto';
 import { ApiImplicitQuery, ApiUseTags, ApiImplicitHeader, ApiImplicitBody, ApiImplicitParam } from '@nestjs/swagger';
-import { ObjectId } from 'mongoose';
 import { Response } from 'express';
 
 @ApiUseTags('users')
@@ -85,5 +84,32 @@ export class UserController {
     } else {
       return res.json({ status: 400, message: null, data: null });
     }
+  }  
+  
+  @ApiImplicitHeader({ name: 'token'})
+  @ApiImplicitParam({ name: 'id', type: 'string', required: true })
+  @Post('followers/:id')
+  async followers(@Req() req, @Res() res, @Param('id') id) {
+    const result = await this.userService.getFollowers(id);
+
+    if (result) {
+      return res.json({ status: 200, message: null, data: result });
+    } else {
+      return res.json({ status: 400, message: 'Wrong request', data: null });
+    }
+  }
+
+  @ApiImplicitHeader({ name: 'token'})
+  @ApiImplicitParam({ name: 'id', type: 'string', required: true })
+  @Post('following/:id')
+  async followings(@Req() req, @Res() res, @Param('id') id) {
+    const result = await this.userService.getFollowings(id);
+
+    if (result) {
+      return res.json({ status: 200, message: null, data: null });
+    } else {
+      return res.json({ status: 400, message: 'Wrong request', data: null });
+    }
   }
 }
+

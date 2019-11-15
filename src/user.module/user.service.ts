@@ -1,4 +1,4 @@
-import { Model, mongoose } from 'mongoose';
+import { Model } from 'mongoose';
 import { ObjectId } from 'mongoose/lib/types/';
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
@@ -57,5 +57,14 @@ export class UserService {
     }
 
     return this.userModel.findByIdAndUpdate(followingId, { [operator]: { followers: followerId }});
+  }
+
+  async getFollowers(userId) {
+    const followers = await this.userModel.findById({ _id: ObjectId(userId) }, 'followers');
+    return this.userModel.find({ _id: { $in: followers }})
+  }
+
+  async getFollowings(userId) {
+    return this.userModel.find({ followers: userId });
   }
 }

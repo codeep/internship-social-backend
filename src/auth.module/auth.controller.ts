@@ -58,45 +58,4 @@ export class AuthController {
       });  
     }
   }
-
-  @Post('recover')
-  async recover(@Body() email, @Res() res: Response) {
-    try {
-      await this.authService.recover(email);
-      return res.json({
-        status: 200,
-        message: '',
-        data: {}
-      });
-    } catch (e) {
-      return res.json({
-        status: 500,
-        message: 'Internal server error',
-        data: null
-      });
-    }
-  }
-
-  @Get('confirm')
-  @ApiImplicitQuery ({
-    name: 'token',
-    required: true,
-    type: String
-  })
-  async confirm(@Query() queryParams, @Res() res: Response) {
-    try {
-      this.authService.confirm(queryParams.token);
-        return res.json({
-          status: 200,
-          message: '',
-          data: null
-        });
-    } catch (e) {
-      return res.json({
-        status: 400,
-        message: 'Token is not valid',
-        data: null
-      });
-    }
-  }
 }
