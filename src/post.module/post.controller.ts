@@ -2,7 +2,7 @@ import { Controller, Post, Body, Param, Delete, Get, Query, Res, Req } from '@ne
 import { PostService } from './post.service';
 import { ObjectId } from 'mongoose';
 import { PostDto } from './post.dto';
-import { ApiUseTags, ApiImplicitHeader, ApiImplicitBody } from '@nestjs/swagger';
+import { ApiUseTags, ApiImplicitHeader, ApiImplicitBody, ApiImplicitParam, ApiImplicitQuery } from '@nestjs/swagger';
 import { Response } from 'express';
 
 @ApiUseTags('posts')
@@ -45,9 +45,12 @@ export class PostController {
   }
 
   @ApiImplicitHeader({ name: 'token'})
+  @ApiImplicitParam({ name: 'id' })
+  @ApiImplicitQuery({ name: 'offset' })
+  @ApiImplicitQuery({ name: 'limit' })
   @Get('wall/:id')
-  async wall(@Param() id, @Query() offset, @Query() limit, @Res() res: Response) {
-    const posts = await this.postService.getWall(id, offset, limit);
+  async wall(@Param() id, @Query() query, @Res() res: Response) {
+    const posts = await this.postService.getWall(id, query.offset || 0, query.limit || 10);
 
     return res.json({
       status: 200,
@@ -57,6 +60,7 @@ export class PostController {
   }
 
   @ApiImplicitHeader({ name: 'token'})
+  @ApiImplicitParam({ name: 'id' })
   @Delete(':id')
   async delete(@Req() req, @Res() res, @Param() id: string) {
     const userId = req['user'].userId;
@@ -77,6 +81,7 @@ export class PostController {
   }
 
   @ApiImplicitHeader({ name: 'token'})
+  @ApiImplicitParam({ name: 'id' })
   @Post(':id/like')
   async like(@Req() req, @Res() res, @Param() id: string) {
     const result = await this.postService.like(req.user.userId, id);
