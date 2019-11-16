@@ -48,7 +48,7 @@ export class UserController {
     return res.json({
       status: 200,
       message: '',
-      data: user
+      data: { user }
     });
   }
 
