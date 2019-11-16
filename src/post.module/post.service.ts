@@ -19,7 +19,7 @@ export class PostService {
   }
 
   async delete(userId, id) {
-    return this.postModel.delete({ author: userId, id })
+    return this.postModel.remove({ author: userId, id })
   }
 
   async like(userId, postId) {
