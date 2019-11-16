@@ -11,10 +11,11 @@ async function bootstrap() {
         .addTag('auth')
         .addTag('users')
         .addTag('posts')
+        .setSchemes('https', 'http')
         .build();
     const document = swagger_1.SwaggerModule.createDocument(app, options);
     swagger_1.SwaggerModule.setup('api', app, document);
-    await app.listen(3000);
+    await app.listen(process.env.PORT || 3000);
 }
 bootstrap();
 //# sourceMappingURL=main.js.map

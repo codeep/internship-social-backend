@@ -63,40 +63,6 @@ let AuthController = class AuthController {
             });
         }
     }
-    async recover(email, res) {
-        try {
-            await this.authService.recover(email);
-            return res.json({
-                status: 200,
-                message: '',
-                data: {}
-            });
-        }
-        catch (e) {
-            return res.json({
-                status: 500,
-                message: 'Internal server error',
-                data: null
-            });
-        }
-    }
-    async confirm(queryParams, res) {
-        try {
-            this.authService.confirm(queryParams.token);
-            return res.json({
-                status: 200,
-                message: '',
-                data: null
-            });
-        }
-        catch (e) {
-            return res.json({
-                status: 400,
-                message: 'Token is not valid',
-                data: null
-            });
-        }
-    }
 };
 __decorate([
     common_1.Post('login'),
@@ -112,25 +78,6 @@ __decorate([
     __metadata("design:paramtypes", [auth_dto_1.RegisterDto, Object]),
     __metadata("design:returntype", Promise)
 ], AuthController.prototype, "register", null);
-__decorate([
-    common_1.Post('recover'),
-    __param(0, common_1.Body()), __param(1, common_1.Res()),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object, Object]),
-    __metadata("design:returntype", Promise)
-], AuthController.prototype, "recover", null);
-__decorate([
-    common_1.Get('confirm'),
-    swagger_1.ApiImplicitQuery({
-        name: 'token',
-        required: true,
-        type: String
-    }),
-    __param(0, common_1.Query()), __param(1, common_1.Res()),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object, Object]),
-    __metadata("design:returntype", Promise)
-], AuthController.prototype, "confirm", null);
 AuthController = __decorate([
     swagger_1.ApiUseTags('auth'),
     common_1.Controller('auth'),

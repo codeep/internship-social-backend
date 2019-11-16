@@ -56,7 +56,10 @@ export class UserService {
       operator = '$push';
     }
 
-    return this.userModel.findByIdAndUpdate(followingId, { [operator]: { followers: followerId }});
+    return Promise.all([
+      this.userModel.findByIdAndUpdate(followingId, { [operator]: { followers: followerId }}),
+      this.userModel.findByIdAndUpdate(followerId, { [operator]: { followings: followingId }}),
+    ]);
   }
 
   async getFollowers(userId) {

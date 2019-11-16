@@ -23,6 +23,8 @@ export class AuthService {
           return Promise.reject();
         }
         registerData.password = this.hashPassword(registerData.password);
+        registerData.fulfilled = false;
+
         return this.userModel.create(registerData);
       });
   }

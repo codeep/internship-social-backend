@@ -7,5 +7,7 @@ export declare class UserService {
     getUser(id: any): Promise<any>;
     saveUser(id: any, body: any): Promise<void>;
     updateUser(id: any, body: any): Promise<any>;
-    follow(followerId: any, followingId: any): Promise<any>;
+    follow(followerId: any, followingId: any): Promise<[any, any]>;
+    getFollowers(userId: any): Promise<any>;
+    getFollowings(userId: any): Promise<any>;
 }

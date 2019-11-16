@@ -1,7 +1,7 @@
-import { Controller, Get, Post, Body, Query, Res } from '@nestjs/common';
+import { Controller, Post, Body, Res } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { LoginDto, RegisterDto } from './auth.dto';
-import { ApiImplicitQuery, ApiUseTags } from '@nestjs/swagger';
+import { ApiUseTags } from '@nestjs/swagger';
 const jsonwebtoken = require('jsonwebtoken');
 import { Response } from 'express';
 
@@ -12,11 +12,7 @@ export class AuthController {
 
   @Post('login')
   async login(@Body() requestBody: LoginDto, @Res() res: Response) {
-    console.log('= = = = + = + = + = + = + = + =');
     const user = await this.authService.login(requestBody.email, requestBody.password);
-    console.log('= = = = = = = = = =');
-    console.log('user', user);
-    console.log('= = = = = = = = = =');
     if (user) {
       const jwt = jsonwebtoken.sign({
         userId: user.id

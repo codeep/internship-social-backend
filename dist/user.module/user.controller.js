@@ -15,6 +15,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const common_1 = require("@nestjs/common");
 const user_service_1 = require("./user.service");
 const swagger_1 = require("@nestjs/swagger");
+const details_dto_1 = require("./details.dto");
 let UserController = class UserController {
     constructor(userService) {
         this.userService = userService;
@@ -48,23 +49,49 @@ let UserController = class UserController {
     }
     async saveDetails(req, body, res) {
         const userId = req['user'].userId;
-        const updateObject = {
-            occupation: body.occupation,
-            location: body.location,
-            bio: body.bio
-        };
+        const updateObject = Object.assign({}, body);
         const result = await this.userService.updateUser(userId, updateObject);
-        console.log('result', result);
+        if (result) {
+            return res.json({
+                status: 200,
+                message: '',
+                data: result
+            });
+        }
+        else {
+            return res.json({
+                status: 400,
+                message: 'Wrong request',
+                data: null
+            });
+        }
     }
     async follow(req, res, id) {
         const userId = req['user'].userId;
         const result = await this.userService.follow(userId, id);
-        console.log('result', result);
         if (result) {
             return res.json({ status: 200, message: null, data: null });
         }
         else {
             return res.json({ status: 400, message: null, data: null });
+        }
+    }
+    async followers(req, res, id) {
+        const result = await this.userService.getFollowers(id);
+        if (result) {
+            return res.json({ status: 200, message: null, data: result });
+        }
+        else {
+            return res.json({ status: 400, message: 'Wrong request', data: null });
+        }
+    }
+    async followings(req, res, id) {
+        const result = await this.userService.getFollowings(id);
+        if (result) {
+            return res.json({ status: 200, message: null, data: null });
+        }
+        else {
+            return res.json({ status: 400, message: 'Wrong request', data: null });
         }
     }
 };
@@ -110,7 +137,7 @@ __decorate([
     common_1.Post('details'),
     __param(0, common_1.Req()), __param(1, common_1.Body()), __param(2, common_1.Res()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object, Object, Object]),
+    __metadata("design:paramtypes", [Object, details_dto_1.DetailsDto, Object]),
     __metadata("design:returntype", Promise)
 ], UserController.prototype, "saveDetails", null);
 __decorate([
@@ -122,6 +149,24 @@ __decorate([
     __metadata("design:paramtypes", [Object, Object, Object]),
     __metadata("design:returntype", Promise)
 ], UserController.prototype, "follow", null);
+__decorate([
+    swagger_1.ApiImplicitHeader({ name: 'token' }),
+    swagger_1.ApiImplicitParam({ name: 'id', type: 'string', required: true }),
+    common_1.Post('followers/:id'),
+    __param(0, common_1.Req()), __param(1, common_1.Res()), __param(2, common_1.Param('id')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object, Object, Object]),
+    __metadata("design:returntype", Promise)
+], UserController.prototype, "followers", null);
+__decorate([
+    swagger_1.ApiImplicitHeader({ name: 'token' }),
+    swagger_1.ApiImplicitParam({ name: 'id', type: 'string', required: true }),
+    common_1.Post('following/:id'),
+    __param(0, common_1.Req()), __param(1, common_1.Res()), __param(2, common_1.Param('id')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object, Object, Object]),
+    __metadata("design:returntype", Promise)
+], UserController.prototype, "followings", null);
 UserController = __decorate([
     swagger_1.ApiUseTags('users'),
     common_1.Controller('users'),

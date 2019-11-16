@@ -8,6 +8,7 @@ export const UserSchema = new mongoose.Schema({
   password: String,
   fulfilled: Boolean,
   followers: [mongoose.ObjectId],
+  followings: [mongoose.ObjectId],
   occupation: String,
   location: String,
   bio: String

@@ -47,8 +47,8 @@ let PostController = class PostController {
             data: posts
         });
     }
-    async wall(id, offset, limit, res) {
-        const posts = await this.postService.getWall(id, offset, limit);
+    async wall(id, query, res) {
+        const posts = await this.postService.getWall(id, query.offset || 0, query.limit || 10);
         return res.json({
             status: 200,
             message: '',
@@ -109,14 +109,18 @@ __decorate([
 ], PostController.prototype, "feed", null);
 __decorate([
     swagger_1.ApiImplicitHeader({ name: 'token' }),
+    swagger_1.ApiImplicitParam({ name: 'id' }),
+    swagger_1.ApiImplicitQuery({ name: 'offset' }),
+    swagger_1.ApiImplicitQuery({ name: 'limit' }),
     common_1.Get('wall/:id'),
-    __param(0, common_1.Param()), __param(1, common_1.Query()), __param(2, common_1.Query()), __param(3, common_1.Res()),
+    __param(0, common_1.Param()), __param(1, common_1.Query()), __param(2, common_1.Res()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object, Object, Object, Object]),
+    __metadata("design:paramtypes", [Object, Object, Object]),
     __metadata("design:returntype", Promise)
 ], PostController.prototype, "wall", null);
 __decorate([
     swagger_1.ApiImplicitHeader({ name: 'token' }),
+    swagger_1.ApiImplicitParam({ name: 'id' }),
     common_1.Delete(':id'),
     __param(0, common_1.Req()), __param(1, common_1.Res()), __param(2, common_1.Param()),
     __metadata("design:type", Function),
@@ -125,6 +129,7 @@ __decorate([
 ], PostController.prototype, "delete", null);
 __decorate([
     swagger_1.ApiImplicitHeader({ name: 'token' }),
+    swagger_1.ApiImplicitParam({ name: 'id' }),
     common_1.Post(':id/like'),
     __param(0, common_1.Req()), __param(1, common_1.Res()), __param(2, common_1.Param()),
     __metadata("design:type", Function),

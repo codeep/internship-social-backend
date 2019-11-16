@@ -1,8 +1,8 @@
 import { Controller, Body, Get, Post, Res, Param, Query, Put, Req } from '@nestjs/common';
 import { UserService } from './user.service';
-// import { UserDto } from './user.dto';
 import { ApiImplicitQuery, ApiUseTags, ApiImplicitHeader, ApiImplicitBody, ApiImplicitParam } from '@nestjs/swagger';
 import { Response } from 'express';
+import { DetailsDto } from './details.dto';
 
 @ApiUseTags('users')
 @Controller('users')
@@ -60,16 +60,26 @@ export class UserController {
 
   @ApiImplicitHeader({ name: 'token'})
   @Post('details')
-  async saveDetails(@Req() req, @Body() body, @Res() res: Response) {
+  async saveDetails(@Req() req, @Body() body: DetailsDto, @Res() res: Response) {
     const userId = req['user'].userId;
-    const updateObject = {
-      occupation: body.occupation,
-      location: body.location,
-      bio: body.bio
-    };
+
+    const updateObject = Object.assign({}, body);
 
     const result = await this.userService.updateUser(userId, updateObject);
-    console.log('result', result);
+
+    if (result) {
+      return res.json({
+        status: 200,
+        message: '',
+        data: result
+      });
+    } else {
+      return res.json({
+        status: 400,
+        message: 'Wrong request',
+        data: null
+      });
+    }
   }
 
   @ApiImplicitHeader({ name: 'token'})
@@ -78,7 +88,7 @@ export class UserController {
   async follow(@Req() req, @Res() res, @Param('id') id) {
     const userId = req['user'].userId;
     const result = await this.userService.follow(userId, id);
-    console.log('result', result);
+
     if (result) {
       return res.json({ status: 200, message: null, data: null });
     } else {

@@ -60,7 +60,17 @@ let UserService = class UserService {
         else {
             operator = '$push';
         }
-        return this.userModel.findByIdAndUpdate(followingId, { [operator]: { followers: followerId } });
+        return Promise.all([
+            this.userModel.findByIdAndUpdate(followingId, { [operator]: { followers: followerId } }),
+            this.userModel.findByIdAndUpdate(followerId, { [operator]: { followings: followingId } }),
+        ]);
+    }
+    async getFollowers(userId) {
+        const followers = await this.userModel.findById({ _id: types_1.ObjectId(userId) }, 'followers');
+        return this.userModel.find({ _id: { $in: followers } });
+    }
+    async getFollowings(userId) {
+        return this.userModel.find({ followers: userId });
     }
 };
 UserService = __decorate([
