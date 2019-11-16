@@ -64,6 +64,7 @@ export class UserController {
     const userId = req['user'].userId;
 
     const updateObject = Object.assign({}, body);
+    updateObject['fulfilled'] = true;
 
     const result = await this.userService.updateUser(userId, updateObject);
 
