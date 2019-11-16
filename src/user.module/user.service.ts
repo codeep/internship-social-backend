@@ -43,7 +43,7 @@ export class UserService {
   }
 
   async updateUser(id, body) {
-    return this.userModel.updateById(id, { $set: body });
+    return this.userModel.findByIdAndUpdate(id, { $set: body }, { returnOriginal:false, new: true });
   }
 
   async follow(followerId, followingId) {

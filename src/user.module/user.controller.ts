@@ -55,7 +55,7 @@ export class UserController {
   @ApiImplicitHeader({ name: 'token'})
   @Put(':id')
   async updateUser(@Param('id') id: string, @Body() body) {
-    await this.userService.saveUser(id, body);
+    const user = await this.userService.saveUser(id, body);
   }
 
   @ApiImplicitHeader({ name: 'token'})

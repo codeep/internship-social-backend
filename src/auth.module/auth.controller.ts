@@ -40,6 +40,7 @@ export class AuthController {
     try {
       const user = await this.authService.register(requestBody);
       if (user) {
+        delete user.password;
         return res.json({
           status: 201,
           message: '',
