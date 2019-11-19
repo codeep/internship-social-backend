@@ -51,7 +51,7 @@ export class PostService {
   }
 
   async getWall(userId, offset, limit) {
-    return await this.postModel.find({ author: userId }).skip(offset).limit(limit);
+    return await this.postModel.find({ author: userId }).skip(offset).limit(limit).populate('author');
   }
 
   async getPost(postId) {
