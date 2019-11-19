@@ -3,7 +3,7 @@ import * as mongoose from 'mongoose';
 export const PostSchema = new mongoose.Schema({
   title: String,
   content: String,
-  author: mongoose.Types.ObjectId,
+  author: {type: mongoose.Types.ObjectId, ref: 'User'},
   attachments: [{
     title: String,
     url: String
