@@ -13,3 +13,5 @@ export const UserSchema = new mongoose.Schema({
   location: String,
   bio: String
 }, { collection: 'sn_user' });
+
+mongoose.model('User', UserSchema);

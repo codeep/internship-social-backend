@@ -9,3 +9,5 @@ export const PostSchema = new mongoose.Schema({
     url: String
   }]
 }, { collection: 'sn_post' });
+
+mongoose.model('Post', PostSchema);
