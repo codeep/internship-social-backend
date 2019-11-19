@@ -15,7 +15,8 @@ export class PostService {
   async create(userId, body) {
     const post = new this.postModel(body);
     post.author = userId;
-    return this.postModel.create(body);
+
+    return post.save();
   }
 
   async delete(userId, id) {

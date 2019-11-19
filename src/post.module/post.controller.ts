@@ -49,8 +49,8 @@ export class PostController {
   @ApiImplicitQuery({ name: 'offset' })
   @ApiImplicitQuery({ name: 'limit' })
   @Get('wall/:id')
-  async wall(@Param() id, @Query() query, @Res() res: Response) {
-    const posts = await this.postService.getWall(id, query.offset || 0, query.limit || 10);
+  async wall(@Param() param, @Query() query, @Res() res: Response) {
+    const posts = await this.postService.getWall(param.id, +query.offset, +query.limit);
 
     return res.json({
       status: 200,
