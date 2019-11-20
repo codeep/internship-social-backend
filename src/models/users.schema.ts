@@ -11,7 +11,9 @@ export const UserSchema = new mongoose.Schema({
   followings: [mongoose.ObjectId],
   occupation: String,
   location: String,
-  bio: String
+  bio: String,
+  cover: String,
+  avatar: String
 }, { collection: 'sn_user' });
 
 mongoose.model('User', UserSchema);

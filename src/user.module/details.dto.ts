@@ -11,4 +11,8 @@ export class DetailsDto {
   location: string;
   @ApiModelPropertyOptional()
   bio: string;
+  @ApiModelPropertyOptional()
+  cover: string;
+  @ApiModelPropertyOptional()
+  avatar: string;
 }
