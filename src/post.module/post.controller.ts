@@ -83,13 +83,13 @@ export class PostController {
   @ApiImplicitHeader({ name: 'token'})
   @ApiImplicitParam({ name: 'id' })
   @Post(':id/like')
-  async like(@Req() req, @Res() res, @Param() id: string) {
-    const result = await this.postService.like(req.user.userId, id);
+  async like(@Req() req, @Res() res, @Param() params) {
+    const result = await this.postService.like(req.user.userId, params.id);
     if (result) {
       res.json({
         status: 200,
         message: '',
-        data: { postId: id }
+        data: { postId: params.id }
       });
     } else {
       res.json({

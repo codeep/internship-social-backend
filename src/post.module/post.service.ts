@@ -32,7 +32,7 @@ export class PostService {
       operator = '$push';
     }
 
-    return this.postModel.findAndUpdateById(postId,  { $set: { [operator]: userId } });
+    return this.postModel.findByIdAndUpdate(postId,  { [operator]: { likes: userId } });
   }
 
   async getFeed(userId, offset, limit) {
