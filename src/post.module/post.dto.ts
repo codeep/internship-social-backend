@@ -6,5 +6,5 @@ export class PostDto {
   @ApiModelProperty()
   content: string;
   @ApiModelPropertyOptional()
-  files: string[]  
+  file: string;
 }

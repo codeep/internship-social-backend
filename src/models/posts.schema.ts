@@ -4,10 +4,7 @@ export const PostSchema = new mongoose.Schema({
   title: String,
   content: String,
   author: {type: mongoose.Types.ObjectId, ref: 'User'},
-  attachments: [{
-    title: String,
-    url: String
-  }]
+  file: String
 }, { collection: 'sn_post' });
 
 mongoose.model('Post', PostSchema);

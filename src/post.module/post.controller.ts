@@ -35,7 +35,7 @@ export class PostController {
   @Get('feed')
   async feed(@Query() queryParams, @Req() req, @Res() res: Response) {
     const userId = req.user.userId;
-    const posts = await this.postService.getFeed(userId, queryParams.offset, queryParams.limit);
+    const posts = await this.postService.getFeed(userId, +queryParams.offset, +queryParams.limit);
 
     return res.json({
       status: 200,
