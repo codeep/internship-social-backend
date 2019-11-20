@@ -36,9 +36,9 @@ export class PostService {
   }
 
   async getFeed(userId, offset, limit) {
-    const followers = await this.userModel.find({ followers: userId });
+    const followings = await this.userModel.findById(userId, 'followings');
 
-    return this.postModel.findAll({ author: { $in: followers } }).offset(offset).limit(limit);
+    return this.postModel.find({ author: { $in: followings } }).skip(offset).limit(limit);
   }
 
   async getFollowingPosts(userId: ObjectId, offset?: number, limit?: number): Promise<any> {
