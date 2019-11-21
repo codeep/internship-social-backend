@@ -38,7 +38,7 @@ export class PostService {
   async getFeed(userId, offset, limit) {
     const followings = await this.userModel.findById(userId, 'followings');
 
-    return this.postModel.find({ author: { $in: followings.followings.concat(userId) } }).skip(offset).limit(limit);
+    return this.postModel.find({ author: { $in: followings.followings.concat(userId) } }).populate('author').skip(offset).limit(limit);
   }
 
   async getFollowingPosts(userId: ObjectId, offset?: number, limit?: number): Promise<any> {
