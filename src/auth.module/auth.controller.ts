@@ -16,7 +16,7 @@ export class AuthController {
     if (user) {
       const jwt = jsonwebtoken.sign({
         userId: user.id
-      }, '3m2b0pu3jdg2c48j6e78', { expiresIn: 600 });
+      }, '3m2b0pu3jdg2c48j6e78', { expiresIn: 6000 });
 
       return res.json({
         status: 200,
