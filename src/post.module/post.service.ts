@@ -1,4 +1,4 @@
-import { Model, ObjectId } from 'mongoose';
+import { mongoose, Model, ObjectId } from 'mongoose';
 import { Injectable, Inject } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 
@@ -20,7 +20,7 @@ export class PostService {
   }
 
   async delete(userId, id) {
-    return this.postModel.remove({ author: userId, id })
+    return this.postModel.remove({ author: userId, _id: id })
   }
 
   async like(userId, postId) {

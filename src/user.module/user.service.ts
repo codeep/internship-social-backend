@@ -1,4 +1,4 @@
-import { Model } from 'mongoose';
+import { Model, mongoose } from 'mongoose';
 import { ObjectId } from 'mongoose/lib/types/';
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
@@ -11,10 +11,10 @@ export class UserService {
   ) {
   }
 
-  async getNearbyUsers() {
+  async getNearbyUsers(limit) {
     return this.userModel.aggregate([
       { 
-        $sample: { size: 3 } 
+        $sample: { size: limit }
       },
       { 
         $project: {

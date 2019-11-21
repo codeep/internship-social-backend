@@ -62,14 +62,14 @@ export class PostController {
   @ApiImplicitHeader({ name: 'token'})
   @ApiImplicitParam({ name: 'id' })
   @Delete(':id')
-  async delete(@Req() req, @Res() res, @Param() id: string) {
+  async delete(@Req() req, @Res() res, @Param() param) {
     const userId = req['user'].userId;
-    const result = await this.postService.delete(userId, id);
+    const result = await this.postService.delete(userId, param.id);
     if (result) {
       res.json({
         status: 200,
         message: '',
-        data: { postId: id }
+        data: { postId: param.id }
       });
     } else {
       res.json({

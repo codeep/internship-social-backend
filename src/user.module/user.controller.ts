@@ -1,7 +1,7 @@
 import { Controller, Body, Get, Post, Res, Param, Query, Put, Req } from '@nestjs/common';
 import { UserService } from './user.service';
 import { ApiImplicitQuery, ApiUseTags, ApiImplicitHeader, ApiImplicitBody, ApiImplicitParam } from '@nestjs/swagger';
-import { Response } from 'express';
+import { Response, Request } from 'express';
 import { DetailsDto } from './details.dto';
 
 @ApiUseTags('users')
@@ -10,11 +10,15 @@ export class UserController {
   constructor(
     private readonly userService: UserService) {}
 
+  @ApiImplicitQuery({ name: 'limit', type: Number })
   @ApiImplicitHeader({ name: 'token'})
   @Post('nearby')
-  async getNearbyUsers(@Res() res: Response) {
-    /* TODO replace with real id */
-    const users = await this.userService.getNearbyUsers();
+  async getNearbyUsers(@Req() req: Request, @Res() res: Response, @Query() query ) {
+    const currentUserId = req['user'].userId;
+    let users = await this.userService.getNearbyUsers(+query.limit);
+    users = users.filter((user) => {
+      user._id === currentUserId
+    })
 
     return res.json({
       status: 200,
