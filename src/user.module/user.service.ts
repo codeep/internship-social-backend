@@ -11,18 +11,8 @@ export class UserService {
   ) {
   }
 
-  async getNearbyUsers(limit) {
-    return this.userModel.aggregate([
-      { 
-        $sample: { size: limit }
-      },
-      { 
-        $project: {
-          password: 0,
-          email: 0
-        }
-      }
-    ]);
+  async getNearbyUsers(userId, limit) {
+    return this.userModel.find({ _id: { $ne: ObjectId(userId) } }, '_id, email').limit(limit);
   }
 
   async searchUsers(search) {

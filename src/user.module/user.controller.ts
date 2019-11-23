@@ -15,8 +15,7 @@ export class UserController {
   @Post('nearby')
   async getNearbyUsers(@Req() req: Request, @Res() res: Response, @Query() query ) {
     const currentUserId = req['user'].userId;
-    let users = await this.userService.getNearbyUsers(+query.limit);
-    users = users.filter((user) => user._id !== currentUserId);
+    let users = await this.userService.getNearbyUsers(currentUserId, +query.limit);
 
     return res.json({
       status: 200,
