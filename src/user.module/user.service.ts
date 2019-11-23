@@ -12,7 +12,7 @@ export class UserService {
   }
 
   async getNearbyUsers(userId, limit) {
-    return this.userModel.find({ _id: { $ne: ObjectId(userId) } }, '_id, email').limit(limit);
+    return this.userModel.find({ _id: { $ne: ObjectId(userId) } }).limit(limit);
   }
 
   async searchUsers(search) {

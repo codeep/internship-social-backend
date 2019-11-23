@@ -13,7 +13,7 @@ export class UserController {
   @ApiImplicitQuery({ name: 'limit', type: Number })
   @ApiImplicitHeader({ name: 'token'})
   @Post('nearby')
-  async getNearbyUsers(@Req() req: Request, @Res() res: Response, @Query() query ) {
+  async getNearbyUsers(@Req() req: Request, @Res() res: Response, @Query() query) {
     const currentUserId = req['user'].userId;
     let users = await this.userService.getNearbyUsers(currentUserId, +query.limit);
 
